@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class='container'>
+  <h3>ДАННЫЕ</h3>
+<h4> Полученные данные представлены в 3-ех фреймах: Гистограмма, Линейный график, Таблица с данными </br>
+  Все данные интерактивны и динамически обновляются.
+    </h4>
+  {% if plot_div_histogram %}
+      <div>
+          {{ plot_div_histogram|safe }}
+      </div>
+  {% else %}
+      <p>Нет данных для отображения графика.</p>
+  {% endif %}
+  {% if plot_div_line %}
+      <div>
+          {{ plot_div_line|safe }}
+      </div>
+  {% else %}
+      <p>Нет данных для отображения графика.</p>
+  {% endif %}
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Discounted_price</th>
+        <th scope="col">Price</th>
+        <th scope="col">Rating</th>
+        <th scope="col">Reviews</th>
+      </tr>
+      <tr>
+        <th scope="col">&</th>
+        <th scope="col">Title</th>
+        <th scope="col">
+        <div class="btn-group">
+          <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Сортировка цен ↑↓
+          </button>
+          <ul class="dropdown-menu">
+              <li><a class="dropdown-item">
+                <form method="get">
+                  {{ filter.form.ordering_price_disc }}
+                  <button type="submit">Сортировка ↑ ↓</button>
+                </form>
+              </li>
+              <li><a class="dropdown-item">
+                <form method="get">
+                  {{ filter.form.range_price_disc }}
+                  <button type="submit">Диапазон → ←</button>
+                </form>
+              </li>           
+          </ul>
+          </div>
+            
+        </th>
+        <th scope="col">
+        <div class="btn-group">
+          <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Сортировка цен ↑↓
+          </button>
+          <ul class="dropdown-menu">
+              <li><a class="dropdown-item">
+                <form method="get">
+                  {{ filter.form.ordering_price }}
+                  <button type="submit">Сортировка ↑ ↓</button>
+                </form>
+              </li> 
+              <li><a class="dropdown-item">
+                <form method="get">
+                  {{ filter.form.range_price }}
+                  <button type="submit">Диапазон → ←</button>
+                </form>
+              </li>          
+          </ul>
+          </div>
+        </th>
+        <th scope="col">
+          <div class="btn-group">
+          <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Фильтр по рейтингу
+          </button>
+          <ul class="dropdown-menu">
+              <li><a class="dropdown-item">
+                <form method="get">
+                  {{ filter.form.min_rating }}
+                  <button type="submit">Рейтинг больше или равен значению</button>
+                </form>
+              </li>
+            <li><a class="dropdown-item">
+                <form method="get">
+                  {{ filter.form.max_rating }}
+                  <button type="submit">Рейтинг меньше или равен значению</button>
+                </form>
+              </li>
+              <li><a class="dropdown-item">
+                <form method="get">
+                  {{ filter.form.ordering_rating }}
+                  <button type="submit">Сортировка ↑ ↓</button>
+                </form>
+              </li>
+          </ul>
+        </div>
+          </th>
+        <th scope="col">
+          <div class="btn-group">
+          <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Фильтр по количеству отзывов
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item">
+                <form method="get">
+                  {{ filter.form.min_reviews }}
+                  <button type="submit">Отзывов больше или равно значению</button>
+                </form>
+              </li>
+            <li><a class="dropdown-item">
+                <form method="get">
+                  {{ filter.form.max_reviews }}
+                  <button type="submit">Отзывов меньше или равно значению</button>
+                </form>
+              </li>
+              <li><a class="dropdown-item">
+                <form method="get">
+                  {{ filter.form.ordering_reviews }}
+                  <button type="submit">Сортировка ↑ ↓</button>
+                </form>
+              </li>
+          </ul>
+        </div>
+          </th>
+      </tr>
+
+    </thead>
+    <tbody>
+      {% for x in products_list %}
+      <tr>
+        <th scope="row">{{ x.id }}</th>
+        <td>{{ x.title }}</td>
+        <td>{{ x.discounted_price }}</td>
+        <td>{{ x.price }}</td>      
+        <td>{{ x.rating }}</td>
+        <td>{{ x.reviews }}</td>
+      </tr>    
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock content %}
+

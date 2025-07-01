@@ -1,0 +1,9 @@
+.idea
+venv
+.env
+db.sqlite3
+.vscode
+settings.json
+launch.json
+.pylintrc
+__pycache__
